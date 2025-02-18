@@ -1,88 +1,77 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <a href="https://k1n9gg07.github.io/SALAM/">Текст ссылки</a>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог товаров</title>
-    <style>
-        /* Основные стили */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-
-        #catalog {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .category {
-            margin-bottom: 10px;
-        }
-
-        .category-title {
-            font-weight: bold;
-            cursor: pointer;
-            padding: 10px;
-            background-color: #ff0000;
-            color: #fff;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-
-        .category-title:hover {
-            background-color: #b30000;
-        }
-
-        .sub-category {
-            margin-left: 20px;
-            margin-top: 10px;
-            border-left: 2px solid #ff0000;
-            padding-left: 10px;
-            transition: opacity 0.3s ease, max-height 0.3s ease;
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-        }
-
-        .sub-category.visible {
-            max-height: 500px; /* Достаточно большое значение для анимации */
-            opacity: 1;
-        }
-
-        .sub-category .category-title {
-            background-color: #e9ecef;
-            color: #333;
-        }
-
-        .sub-category .category-title:hover {
-            background-color: #d6d8db;
-        }
-
-        /* Анимация для иконки */
-        .category-title::after {
-            content: '▼';
-            float: right;
-            transition: transform 0.3s ease;
-        }
-
-        .category-title.collapsed::after {
-            transform: rotate(-90deg);
-        }
-    </style>
 </head>
 <body>
-    <div id="catalog"></div>
-
     <script>
+        // Создаем стили динамически
+        const style = document.createElement('style');
+        style.textContent = `
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+            }
+            #catalog {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+            .category {
+                margin-bottom: 10px;
+            }
+            .category-title {
+                font-weight: bold;
+                cursor: pointer;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+            }
+            .category-title:hover {
+                background-color: #0056b3;
+            }
+            .sub-category {
+                margin-left: 20px;
+                margin-top: 10px;
+                border-left: 2px solid #007bff;
+                padding-left: 10px;
+                transition: opacity 0.3s ease, max-height 0.3s ease;
+                overflow: hidden;
+                max-height: 0;
+                opacity: 0;
+            }
+            .sub-category.visible {
+                max-height: 500px;
+                opacity: 1;
+            }
+            .sub-category .category-title {
+                background-color: #e9ecef;
+                color: #333;
+            }
+            .sub-category .category-title:hover {
+                background-color: #d6d8db;
+            }
+            .category-title::after {
+                content: '▼';
+                float: right;
+                transition: transform 0.3s ease;
+            }
+            .category-title.collapsed::after {
+                transform: rotate(-90deg);
+            }
+        `;
+        document.head.appendChild(style);
+
         // Данные каталога
         const catalogData = {
             "Книги": {
@@ -138,8 +127,12 @@
             return container;
         }
 
-        // Создание каталога
-        const catalogContainer = document.getElementById('catalog');
+        // Создаем контейнер для каталога
+        const catalogContainer = document.createElement('div');
+        catalogContainer.id = 'catalog';
+        document.body.appendChild(catalogContainer);
+
+        // Заполняем каталог данными
         for (const key in catalogData) {
             catalogContainer.appendChild(createCatalogItem(key, catalogData[key]));
         }
